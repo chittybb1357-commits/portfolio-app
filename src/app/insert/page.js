@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 export default function Insert() {
   const supabase = createClient();
   const router = useRouter();
-
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -46,6 +45,7 @@ export default function Insert() {
   return (
     <div className="about_content shadow">
       <h2 className="mb-3">데이터 입력</h2>
+
       <div className="contact_form">
         <form onSubmit={insertData}>
           <p className="field">

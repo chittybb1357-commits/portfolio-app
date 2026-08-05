@@ -28,7 +28,6 @@ export default function Home({ data }) {
           <div className="col-md-4" key={item.id}>
             <div className="contents shadow">
               {/* <img src="images/latest_portfolio_01.jpg" alt="latest_portfolio_01"/> */}
-
               <div className="hover_contents">
                 <div className="list_info">
                   <h3>

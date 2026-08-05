@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
         <hr />
 
         <main className="content">
-          <div className="container latest_portfolio">{children}</div>
+          <div className="container">{children}</div>
         </main>
 
         <footer>
