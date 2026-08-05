@@ -9,7 +9,19 @@ export default async function Portfolio({ params }) {
     .eq("id", id)
     .single();
 
-  console.log(data);
+  // 이전글 id, title 조회
+  const { data: prev } = await supabase
+    .from("portfolio")
+    .select("id", "title")
+    .lt("id", id)
+    .maybeSingle();
+
+  // 다음글 id, title 조회
+  const { data: next } = await supabase
+    .from("portfolio")
+    .select("id", "title")
+    .gt("id", id)
+    .maybeSingle();
 
   return (
     <div className="portoflio-single">
