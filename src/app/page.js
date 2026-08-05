@@ -11,7 +11,6 @@ export default async function Page() {
 
   if (error) {
     console.error("연결실패", error);
-
     return <div>프로젝트 로드 실패</div>;
   }
 
