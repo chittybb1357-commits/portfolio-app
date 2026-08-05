@@ -1,132 +1,176 @@
-import Image from "next/image";
+"use client";
 
-export default function Contact() {
+import { createClient } from "@/utils/supabase/client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Insert() {
+  const supabase = createClient();
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    url: "",
+    review: "",
+    reviewer: "",
+    rep1_img: "",
+    rep1_desc: "",
+    rep2_img: "",
+    rep2_desc: "",
+    thumbnail: "",
+  });
+
+  async function insertData(e) {
+    e.preventDefault();
+
+    const { error } = await supabase.from("portfolio").insert(formData);
+
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("데이터 입력 성공");
+      router.push("/");
+    }
+  }
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="about_content shadow">
-      <div className="contact">
-        <h3 className="heading6">Let&apos;s Get in Touch</h3>
+      <h2 className="mb-3">데이터 입력</h2>
 
-        <p>
-          You can call me, email me directly or connect with me through my
-          social networks.
-        </p>
+      <div className="contact_form">
+        <form onSubmit={insertData}>
+          <p className="field">
+            <label htmlFor="title">프로젝트 이름:</label>
 
-        <p>
-          (+40) 744122222
-          <br />
-          <a href="mailto:hello@adipurdila.com">hello@adipurdila.com</a>
-        </p>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="프로젝트 이름"
+              required
+              onChange={handleChange}
+            />
+          </p>
 
-        <ul className="social_links">
-          <li>
-            <a href="">
-              <Image
-                src="/images/twitter.png"
-                width={32}
-                height={32}
-                alt="twitter"
-              />
-            </a>
-          </li>
+          <p className="field">
+            <label htmlFor="content">프로젝트 설명:</label>
 
-          <li>
-            <a href="">
-              <Image
-                src="/images/facebook.png"
-                width={32}
-                height={32}
-                alt="facebook"
-              />
-            </a>
-          </li>
+            <textarea
+              name="content"
+              id="content"
+              cols="30"
+              rows="10"
+              placeholder="프로젝트 설명"
+              required
+              onChange={handleChange}
+            ></textarea>
+          </p>
 
-          <li>
-            <a href="">
-              <Image
-                src="/images/dribble.png"
-                width={32}
-                height={32}
-                alt="dribble"
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
+          <p className="field">
+            <label htmlFor="url">프로젝트 주소:</label>
 
-      <hr className="double" />
+            <input
+              type="url"
+              id="url"
+              name="url"
+              placeholder="프로젝트 주소"
+              onChange={handleChange}
+            />
+          </p>
 
-      <div className="form">
-        <h3 className="heading6">Need a Quote?</h3>
+          <p className="field">
+            <label htmlFor="review">프로젝트 후기:</label>
 
-        <p>Use the form below. All fields are required.</p>
+            <textarea
+              name="review"
+              id="review"
+              cols="30"
+              rows="10"
+              placeholder="프로젝트 후기"
+              onChange={handleChange}
+            ></textarea>
+          </p>
 
-        <div className="contact_form">
-          <form action="">
-            <p className="field">
-              <label htmlFor="username">Full Name:</label>
+          <p className="field">
+            <label htmlFor="reviewer">후기 글쓴이:</label>
 
-              <input type="text" id="username" placeholder="Your Name" />
-            </p>
+            <input
+              type="text"
+              id="reviewer"
+              name="reviewer"
+              placeholder="후기 글쓴이"
+              onChange={handleChange}
+            />
+          </p>
 
-            <p className="field">
-              <label htmlFor="useremail">Email Address:</label>
+          <p className="field">
+            <label htmlFor="rep1_img">대표 이미지 1:</label>
 
-              <input type="text" id="useremail" placeholder="Your Email" />
-            </p>
+            <input
+              type="fiile"
+              id="rep1_img"
+              name="rep1_img"
+              accept="image/*"
+            />
+          </p>
 
-            <p className="field">
-              <label htmlFor="userphone">Phone Number:</label>
+          <p className="field">
+            <label htmlFor="rep1_desc">대표 이미지 1 설명</label>
 
-              <input
-                type="text"
-                id="userphone"
-                placeholder="Your Phone number"
-              />
-            </p>
+            <input
+              type="text"
+              id="rep1_desc"
+              name="rep1_desc"
+              onChange={handleChange}
+            />
+          </p>
 
-            <p className="field">
-              <label htmlFor="project-type">Project Type:</label>
+          <p className="field">
+            <label htmlFor="rep2_img">대표 이미지 2:</label>
 
-              <select name="" id="project-type">
-                <option value="" readOnly>
-                  - Select Value -
-                </option>
+            <input
+              type="fiile"
+              id="rep2_img"
+              name="rep2_img"
+              accept="image/*"
+            />
+          </p>
 
-                <option value="Web">Web</option>
+          <p className="field">
+            <label htmlFor="rep2_desc">대표 이미지 2 설명</label>
 
-                <option value="Mobile">Mobile</option>
+            <input
+              type="text"
+              id="rep2_desc"
+              name="rep2_desc"
+              onChange={handleChange}
+            />
+          </p>
 
-                <option value="Print">Print</option>
-              </select>
-            </p>
+          <p className="field">
+            <label htmlFor="thumbnail">썸네일:</label>
 
-            <p className="field">
-              <label htmlFor="project-desc">Project Description:</label>
+            <input
+              type="file"
+              id="thumbnail"
+              name="thumbnail"
+              accept="image/*"
+            />
+          </p>
 
-              <textarea
-                name=""
-                id="project-desc"
-                cols="30"
-                rows="10"
-                placeholder="project description"
-              ></textarea>
-            </p>
-
-            <p className="field">
-              <label htmlFor="budget">Available Budget:</label>
-
-              <input type="number" id="budget" placeholder="$0.00" />
-            </p>
-
-            <p className="submit">
-              <input
-                type="submit"
-                className="primary-btn"
-                value="give me a quote"
-              />
-            </p>
-          </form>
-        </div>
+          <p className="submit">
+            <input type="submit" className="primary-btn" value="등록" />
+          </p>
+        </form>
       </div>
     </div>
   );
