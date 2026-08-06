@@ -95,7 +95,7 @@ export default function Insert() {
   if (!user) {
     return (
       <div className="about_content shadow">
-        <h2>관리자 로그인</h2>
+        <h2 className="mb-3">관리자 로그인</h2>
         <div className="contact_form">
           <form onSubmit={handleLogin}>
             <p className="field">
