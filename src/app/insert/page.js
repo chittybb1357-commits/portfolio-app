@@ -39,6 +39,7 @@ export default function Insert() {
 
   async function insertData(e) {
     e.preventDefault();
+
     const { error } = await supabase.from("portfolio").insert(formData);
     if (error) {
       console.log(error);
@@ -50,6 +51,7 @@ export default function Insert() {
       await uploadThumbnail(thumbnail);
     }
   }
+
   const handleChange = e => {
     const { name, value } = e.target;
 
@@ -80,6 +82,7 @@ export default function Insert() {
       console.log("파일 업로드 성공:");
     }
   }
+
   //로그인 진행
   const handleLogin = async e => {
     e.preventDefault();
@@ -88,6 +91,7 @@ export default function Insert() {
       alert("로그인 실패", error.message);
     } else {
       alert("로그인 성공");
+      setUser(data.user);
       router.refresh();
     }
   };
@@ -96,6 +100,7 @@ export default function Insert() {
     return (
       <div className="about_content shadow">
         <h2 className="mb-3">관리자 로그인</h2>
+
         <div className="contact_form">
           <form onSubmit={handleLogin}>
             <p className="field">
@@ -109,6 +114,7 @@ export default function Insert() {
                 onChange={handleAuthChange}
               />
             </p>
+
             <p className="field">
               <label htmlFor="password">비밀번호</label>
               <input
@@ -120,6 +126,7 @@ export default function Insert() {
                 onChange={handleAuthChange}
               />
             </p>
+
             <p className="submit">
               <input type="submit" className="primary-btn" value="로그인" />
             </p>
@@ -131,6 +138,7 @@ export default function Insert() {
   return (
     <div className="about_content shadow">
       <h2 className="mb-3">데이터 입력</h2>
+
       <div className="contact_form">
         <form onSubmit={insertData}>
           <p className="field">
@@ -144,6 +152,7 @@ export default function Insert() {
               onChange={handleChange}
             />
           </p>
+
           <p className="field">
             <label htmlFor="content">프로젝트 설명:</label>
             <textarea
@@ -156,6 +165,7 @@ export default function Insert() {
               onChange={handleChange}
             ></textarea>
           </p>
+
           <p className="field">
             <label htmlFor="url">프로젝트 주소:</label>
             <input
@@ -166,6 +176,7 @@ export default function Insert() {
               onChange={handleChange}
             />
           </p>
+
           <p className="field">
             <label htmlFor="review">프로젝트 후기:</label>
             <textarea
@@ -177,6 +188,7 @@ export default function Insert() {
               onChange={handleChange}
             ></textarea>
           </p>
+
           <p className="field">
             <label htmlFor="reviewer">후기 글쓴이:</label>
             <input
@@ -187,6 +199,7 @@ export default function Insert() {
               onChange={handleChange}
             />
           </p>
+
           <p className="field">
             <label htmlFor="rep1_img">대표 이미지 1:</label>
             <input
@@ -196,6 +209,7 @@ export default function Insert() {
               accept="image/*"
             />
           </p>
+
           <p className="field">
             <label htmlFor="rep1_desc">대표 이미지 1 설명</label>
             <input
@@ -205,6 +219,7 @@ export default function Insert() {
               onChange={handleChange}
             />
           </p>
+
           <p className="field">
             <label htmlFor="rep2_img">대표 이미지 2:</label>
             <input
@@ -214,6 +229,7 @@ export default function Insert() {
               accept="image/*"
             />
           </p>
+
           <p className="field">
             <label htmlFor="rep2_desc">대표 이미지 2 설명</label>
             <input
@@ -223,6 +239,7 @@ export default function Insert() {
               onChange={handleChange}
             />
           </p>
+
           <p className="field">
             <label htmlFor="thumbnail">썸네일:</label>
             <input
@@ -233,6 +250,7 @@ export default function Insert() {
               onChange={handleFileChange}
             />
           </p>
+
           <p className="submit">
             <input type="submit" className="primary-btn" value="등록" />
           </p>
