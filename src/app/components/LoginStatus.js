@@ -25,11 +25,11 @@ export default function LoginStatus() {
 
   if (user) {
     return (
-      <>
+      <li>
         <button className="btn btn-primary" onClick={handleLogout}>
           로그아웃
         </button>
-      </>
+      </li>
     );
   }
 }
