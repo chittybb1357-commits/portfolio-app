@@ -69,12 +69,16 @@ export default function Insert() {
 
   const handleFileChange = e => {
     setThumbnail(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   async function uploadThumbnail(file) {
+    const ext = file.name.split(".").pop();
+    const fileName = `${crypto.randomUUID()}.${ext}`;
+
     const { data, error } = await supabase.storage
       .from("portfolio")
-      .upload(`thumbnail/${file.name}`, file);
+      .upload(`thumbnail/${fileName}`, file);
     if (error) {
       // Handle error
       console.error("파일 업로드 실패:", error);
