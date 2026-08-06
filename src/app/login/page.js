@@ -29,6 +29,17 @@ export default function Login() {
       router.refresh();
     }
   };
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+    if (error) {
+      console.error("로그인 실패", error.message);
+    }
+  };
   return (
     <div className="about_content shadow">
       <h2>로그인</h2>
@@ -60,6 +71,8 @@ export default function Login() {
             <input type="submit" className="primary-btn" value="로그인" />
           </p>
         </form>
+        <hr />
+        <button onClick={signInWithGoogle}>구글로 로그인</button>
       </div>
     </div>
   );
