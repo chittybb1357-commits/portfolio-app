@@ -23,19 +23,18 @@ export default function Insert() {
 
   const [thumbnail, setThumbnail] = useState(null);
   const [user, setUser] = useState(null);
-  const [authForm, setAuthForm] = useState({
+  const [authForm, setAuthform] = useState({
     email: "",
     password: "",
   });
 
   useEffect(() => {
-    const checkuser = async () => {
+    (async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       setUser(user);
-    };
-    checkuser();
+    })();
   }, [supabase.auth]);
 
   async function insertData(e) {
@@ -69,7 +68,7 @@ export default function Insert() {
       .upload(`thumbnail/${file.name}`, file);
     if (error) {
       // Handle error
-      console.log("파일 업로드 실패:", error);
+      console.error("파일 업로드 실패:", error);
     } else {
       // Handle success
       console.log("파일 업로드 성공:");
