@@ -20,21 +20,17 @@ export default function Login() {
   //로그인 진행
   const handleLogin = async e => {
     e.preventDefault();
-
     const { data, error } = await supabase.auth.signInWithPassword(authForm);
     if (error) {
       alert("로그인 실패", error.message);
     } else {
       alert("로그인 성공");
-      setUser(data.user);
-      router.refresh();
+      router.push("/");
     }
   };
-
   return (
     <div className="about_content shadow">
       <h2>로그인</h2>
-
       <div className="contact_form">
         <form onSubmit={handleLogin}>
           <p className="field">
@@ -48,7 +44,6 @@ export default function Login() {
               onChange={handleAuthChange}
             />
           </p>
-
           <p className="field">
             <label htmlFor="password">비밀번호</label>
             <input
@@ -60,7 +55,6 @@ export default function Login() {
               onChange={handleAuthChange}
             />
           </p>
-
           <p className="submit">
             <input type="submit" className="primary-btn" value="로그인" />
           </p>
