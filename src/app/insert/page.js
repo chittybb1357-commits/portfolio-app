@@ -46,6 +46,7 @@ export default function Insert() {
     } else {
       console.log("데이터 입력 성공");
       router.push("/");
+      router.refresh();
     }
     if (thumbnail) {
       await uploadThumbnail(thumbnail);
