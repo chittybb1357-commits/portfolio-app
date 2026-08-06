@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Insert() {
@@ -22,6 +22,21 @@ export default function Insert() {
   });
 
   const [thumbnail, setThumbnail] = useState(null);
+  const [user, setUser] = useState(null);
+  const [authForm, setAuthForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    const checkuser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    checkuser();
+  }, [supabase.auth]);
 
   async function insertData(e) {
     e.preventDefault();
@@ -31,6 +46,9 @@ export default function Insert() {
     } else {
       console.log("데이터 입력 성공");
       router.push("/");
+    }
+    if (thumbnail) {
+      await uploadThumbnail(thumbnail);
     }
   }
   const handleChange = e => {
@@ -44,6 +62,19 @@ export default function Insert() {
   const handleFileChange = e => {
     setThumbnail(e.target.files[0]);
   };
+
+  async function uploadThumbnail(file) {
+    const { data, error } = await supabase.storage
+      .from("portfolio")
+      .upload(`thumbnail/${file.name}`, file);
+    if (error) {
+      // Handle error
+      console.log("파일 업로드 실패:", error);
+    } else {
+      // Handle success
+      console.log("파일 업로드 성공:");
+    }
+  }
 
   return (
     <div className="about_content shadow">
@@ -106,19 +137,39 @@ export default function Insert() {
           </p>
           <p className="field">
             <label htmlFor="rep1_img">대표 이미지 1:</label>
-            <input type="fiile" id="rep1_img" name="rep1_img" accept="image/*" />
+            <input
+              type="fiile"
+              id="rep1_img"
+              name="rep1_img"
+              accept="image/*"
+            />
           </p>
           <p className="field">
             <label htmlFor="rep1_desc">대표 이미지 1 설명</label>
-            <input type="text" id="rep1_desc" name="rep1_desc" onChange={handleChange} />
+            <input
+              type="text"
+              id="rep1_desc"
+              name="rep1_desc"
+              onChange={handleChange}
+            />
           </p>
           <p className="field">
             <label htmlFor="rep2_img">대표 이미지 2:</label>
-            <input type="fiile" id="rep2_img" name="rep2_img" accept="image/*" />
+            <input
+              type="fiile"
+              id="rep2_img"
+              name="rep2_img"
+              accept="image/*"
+            />
           </p>
           <p className="field">
             <label htmlFor="rep2_desc">대표 이미지 2 설명</label>
-            <input type="text" id="rep2_desc" name="rep2_desc" onChange={handleChange} />
+            <input
+              type="text"
+              id="rep2_desc"
+              name="rep2_desc"
+              onChange={handleChange}
+            />
           </p>
           <p className="field">
             <label htmlFor="thumbnail">썸네일:</label>
