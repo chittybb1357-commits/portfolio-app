@@ -7,18 +7,15 @@ export default function Insert() {
   const supabase = createClient();
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const INITIAL_PORTFOLIO = {
     title: "",
     content: "",
     url: "",
     review: "",
     reviewer: "",
-    rep1_img: "",
-    rep1_desc: "",
-    rep2_img: "",
-    rep2_desc: "",
-    thumbnail: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(INITIAL_PORTFOLIO);
 
   const [thumbnail, setThumbnail] = useState(null);
   const [user, setUser] = useState(null);
@@ -82,7 +79,9 @@ export default function Insert() {
     const ext = file.name.split(".").pop();
     const filePath = `thumbnail/${crypto.randomUUID()}.${ext}`;
 
-    const { data, error } = await supabase.storage.from("portfolio").upload(filePath, file);
+    const { data, error } = await supabase.storage
+      .from("portfolio")
+      .upload(filePath, file);
     if (error) {
       // Handle error
       console.error("파일 업로드 실패:", error);
@@ -202,19 +201,39 @@ export default function Insert() {
           </p>
           <p className="field">
             <label htmlFor="rep1_img">대표 이미지 1:</label>
-            <input type="fiile" id="rep1_img" name="rep1_img" accept="image/*" />
+            <input
+              type="fiile"
+              id="rep1_img"
+              name="rep1_img"
+              accept="image/*"
+            />
           </p>
           <p className="field">
             <label htmlFor="rep1_desc">대표 이미지 1 설명</label>
-            <input type="text" id="rep1_desc" name="rep1_desc" onChange={handleChange} />
+            <input
+              type="text"
+              id="rep1_desc"
+              name="rep1_desc"
+              onChange={handleChange}
+            />
           </p>
           <p className="field">
             <label htmlFor="rep2_img">대표 이미지 2:</label>
-            <input type="fiile" id="rep2_img" name="rep2_img" accept="image/*" />
+            <input
+              type="fiile"
+              id="rep2_img"
+              name="rep2_img"
+              accept="image/*"
+            />
           </p>
           <p className="field">
             <label htmlFor="rep2_desc">대표 이미지 2 설명</label>
-            <input type="text" id="rep2_desc" name="rep2_desc" onChange={handleChange} />
+            <input
+              type="text"
+              id="rep2_desc"
+              name="rep2_desc"
+              onChange={handleChange}
+            />
           </p>
           <p className="field">
             <label htmlFor="thumbnail">썸네일:</label>
