@@ -1,5 +1,4 @@
 "use client";
-
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -39,7 +38,6 @@ export default function LoginStatus() {
           <li>
             <Link href="/login">로그인</Link>
           </li>
-
           <li>
             <Link href="/register">회원가입</Link>
           </li>
