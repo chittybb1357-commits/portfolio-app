@@ -6,9 +6,7 @@ export default function Home({ data }) {
 
   const getPublicURL = path => {
     if (!path) return "";
-    const { data: publicUrlData } = supabase.storage
-      .from("portfolio")
-      .getPublicUrl(path);
+    const { data: publicUrlData } = supabase.storage.from("portfolio").getPublicUrl(path);
     return publicUrlData.publicUrl;
   };
   return (
