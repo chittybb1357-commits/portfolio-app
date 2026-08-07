@@ -11,7 +11,6 @@ export default function Home({ data }) {
       .getPublicUrl(path);
     return publicUrlData.publicUrl;
   };
-
   return (
     <div className="latest_portfolio">
       <div className="row intro">
@@ -20,11 +19,29 @@ export default function Home({ data }) {
             <h2 className="heading2">I’m alikerock</h2>
           </div>
         </div>
+        <div className="col-md-4">
+          <div className="contents shadow">
+            <h2 className="heading2">I create super awesome stuff</h2>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="contents shadow">
+            <h2 className="heading2">I’m available for freelance projects</h2>
+          </div>
+        </div>
       </div>
       <div className="row list">
         {data.map(item => (
           <div className="col-md-4" key={item.id}>
             <div className="contents shadow">
+              {item.thumbnail && (
+                <Image
+                  src={getPublicURL(item.thumbnail)}
+                  width={364}
+                  height={209}
+                  alt={item.title}
+                />
+              )}
               <div className="hover_contents">
                 <div className="list_info">
                   <h3>
