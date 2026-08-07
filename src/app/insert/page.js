@@ -15,7 +15,21 @@ export default function Insert() {
     reviewer: "",
   };
 
-  const [formData, setFormData] = useState(INITIAL_PORTFOLIO);
+  const createInitialImages = () => [
+    {
+      file: null,
+      decription: "",
+      displayOrder: 1,
+    },
+    {
+      file: null,
+      decription: "",
+      displayOrder: 2,
+    },
+  ];
+
+  const [portfolio, setPortfolio] = useState(INITIAL_PORTFOLIO);
+  const [portfolioImages, setPortfolioImages] = useState(createInitialImages);
 
   const [thumbnail, setThumbnail] = useState(null);
   const [user, setUser] = useState(null);
