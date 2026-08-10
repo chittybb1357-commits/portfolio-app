@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/client";
+import Image from "next/image";
 
 export default async function Portfolio({ params }) {
   const supabase = createClient();
@@ -23,7 +24,7 @@ export default async function Portfolio({ params }) {
     })
     .single();
 
-  //이전글 id, title 조회
+  // 이전글 id, title 조회
   const { data: prev } = await supabase
     .from("portfolio")
     .select("id,title")
@@ -32,7 +33,7 @@ export default async function Portfolio({ params }) {
     .limit(1)
     .maybeSingle();
 
-  //다음글 id, title 조회
+  // 다음글 id, title 조회
   const { data: next } = await supabase
     .from("portfolio")
     .select("id,title")
@@ -41,19 +42,46 @@ export default async function Portfolio({ params }) {
     .limit(1)
     .maybeSingle();
 
-  console.log("prev" + prev);
-  console.log("next" + next);
+  // console.log("prev" + prev);
+  // console.log("next" + next);
 
-  console.log(current);
+  // console.log(current);
+
+  const getPublicURL = path => {
+    if (!path) return "";
+
+    const { data: publicUrlData } = supabase.storage
+      .from("portfolio")
+      .getPublicUrl(path);
+
+    return publicUrlData.publicUrl;
+  };
+
+  const portfolioImages = current.portfolio_images ?? [];
 
   return (
     <div className="portoflio-single">
       <div className="row">
         <div className="col-md-8 decription">
-          <div className="contents shadow">
-            {/* <img src="images/portfolio_single_img1.jpg" alt="img1"> */}
-            <p>{}</p>
-          </div>
+          {portfolioImages.length > 0 ? (
+            portfolioImages.map((image, idx) => (
+              <div key={idx} className="contents shadow">
+                <Image
+                  src={getPublicURL(image.image_url)}
+                  alt={image.description}
+                  width={762}
+                  height={504}
+                  style={{ width: "100%", height: "auto" }}
+                  loading="eager"
+                  // loading="lazy"
+                />
+
+                <p>{image.description}</p>
+              </div>
+            ))
+          ) : (
+            <div className="contents shadow">대표 이미지가 없습니다.</div>
+          )}
         </div>
 
         <div className="col-md-4 portfolio_info">
