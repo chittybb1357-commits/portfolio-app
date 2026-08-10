@@ -58,6 +58,20 @@ export default function Insert() {
     })();
   }, [supabase.auth]);
 
+  const resetForm = () => {
+    setPortfolio(INITIAL_PORTFOLIO);
+
+    setPortfolioImages(createInitialImages());
+
+    setThumbnail(null);
+
+    Object.values(fileRef.current).forEach(el => {
+      if (el) {
+        el.value = "";
+      }
+    });
+  };
+
   async function insertData(e) {
     e.preventDefault();
 
@@ -77,16 +91,20 @@ export default function Insert() {
     // 2. portfolio 테이블 저장
     const { data: insertedPortfolio, error } = await supabase
       .from("portfolio")
-      .insert({ ...formData, thumbnail: thumbnailPath }) // 글 등록
+      .insert({ ...portfolio, thumbnail: thumbnailPath }) // 글 등록
       .select("id") // 등록한 글의 id 조회
       .single();
 
     if (error) {
       console.log(error);
+
+      await supabase.storage.from("portfolio").remove([thumbnailPath]);
+
+      alert(`대표 이미지 입력 실패:${error.message}`);
     } else {
-      console.log("데이터 입력 성공");
-      router.push("/");
-      router.refresh();
+      // console.log("데이터 입력 성공");
+      // router.push("/");
+      // router.refresh();
     }
 
     const portfolioId = insertedPortfolio.id; // 새글의 id 할당
@@ -137,6 +155,11 @@ export default function Insert() {
         alert(`대표 이미지 입력 실패:${error.message}`);
       }
     }
+
+    // 글 등록 성공시 - 모든 입력값 초기화
+    alert("글 등록 성공");
+
+    resetForm();
   }
 
   const handlePortfolioChange = e => {
@@ -163,7 +186,7 @@ export default function Insert() {
 
     setPortfolioImages(prev =>
       prev.map((image, idx) =>
-        index === idx ? { ...image, decription: value } : image,
+        index === idx ? { ...image, description: value } : image,
       ),
     );
   };
@@ -210,7 +233,9 @@ export default function Insert() {
       alert("로그인 실패", error.message);
     } else {
       alert("로그인 성공");
+
       setUser(data.user);
+
       router.refresh();
     }
   };
