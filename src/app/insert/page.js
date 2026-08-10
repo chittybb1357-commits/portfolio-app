@@ -296,6 +296,7 @@ export default function Insert() {
               id="title"
               name="title"
               placeholder="프로젝트 이름"
+              value={portfolio.title}
               required
               onChange={handlePortfolioChange}
             />
@@ -307,6 +308,7 @@ export default function Insert() {
             <textarea
               name="content"
               id="content"
+              value={portfolio.content}
               cols="30"
               rows="10"
               placeholder="프로젝트 설명"
@@ -321,6 +323,7 @@ export default function Insert() {
             <input
               type="url"
               id="url"
+              value={portfolio.url}
               name="url"
               placeholder="프로젝트 주소"
               onChange={handlePortfolioChange}
@@ -333,6 +336,7 @@ export default function Insert() {
             <textarea
               name="review"
               id="review"
+              value={portfolio.review}
               cols="30"
               rows="10"
               placeholder="프로젝트 후기"
@@ -346,6 +350,7 @@ export default function Insert() {
             <input
               type="text"
               id="reviewer"
+              value={portfolio.reviewer}
               name="reviewer"
               placeholder="후기 글쓴이"
               onChange={handlePortfolioChange}
@@ -388,7 +393,7 @@ export default function Insert() {
               name="rep2_img"
               accept="image/*"
               ref={element => {
-                fileRef.current.image1 = element;
+                fileRef.current.image2 = element;
               }}
               onChange={handlePortfolioFileChange(1)}
             />
