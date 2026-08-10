@@ -6,7 +6,9 @@ import Link from "next/link";
 
 export default function LoginStatus() {
   const supabase = createClient();
+
   const [user, setUser] = useState(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -20,8 +22,11 @@ export default function LoginStatus() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+
     setUser(null);
+
     router.push("/");
+
     router.refresh();
   };
 
@@ -38,6 +43,7 @@ export default function LoginStatus() {
           <li>
             <Link href="/login">로그인</Link>
           </li>
+
           <li>
             <Link href="/register">회원가입</Link>
           </li>
