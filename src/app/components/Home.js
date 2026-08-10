@@ -35,12 +35,19 @@ export default function Home({ data }) {
           <div className="col-md-4" key={item.id}>
             <div className="contents shadow">
               {item.thumbnail && (
-                <Image
-                  src={getPublicURL(item.thumbnail)}
-                  width={364}
-                  height={209}
-                  alt={item.title}
-                />
+                <div style={{ height: 209 }}>
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                    src={getPublicURL(item.thumbnail)}
+                    width={364}
+                    height={209}
+                    alt={item.title}
+                  />
+                </div>
               )}
               <div className="hover_contents">
                 <div className="list_info">
