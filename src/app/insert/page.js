@@ -253,6 +253,7 @@ export default function Insert() {
               <input
                 type="email"
                 id="email"
+                value={authForm.email}
                 name="email"
                 placeholder="email"
                 required
@@ -266,6 +267,7 @@ export default function Insert() {
               <input
                 type="password"
                 id="password"
+                value={authForm.password}
                 name="password"
                 placeholder="비밀번호"
                 required
