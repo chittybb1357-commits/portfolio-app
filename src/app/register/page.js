@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function Register() {
   const supabase = createClient();
+
   const router = useRouter();
 
   const [authForm, setAuthform] = useState({
@@ -14,27 +15,34 @@ export default function Register() {
 
   const handleAuthChange = e => {
     const { name, value } = e.target;
+
     setAuthform(prev => ({ ...prev, [name]: value }));
   };
 
-  //회원가입 진행
+  // 회원가입 진행
   const handleSignUp = async e => {
     e.preventDefault();
+
     const { data, error } = await supabase.auth.signUp(authForm);
+
     if (error) {
       alert("회원가입 실패", error.message);
     } else {
       alert("회원가입 성공");
+
       router.push("/");
     }
   };
+
   return (
     <div className="about_content shadow">
       <h2>회원가입</h2>
+
       <div className="contact_form">
         <form onSubmit={handleSignUp}>
           <p className="field">
             <label htmlFor="email">이메일</label>
+
             <input
               type="email"
               id="email"
@@ -44,8 +52,10 @@ export default function Register() {
               onChange={handleAuthChange}
             />
           </p>
+
           <p className="field">
             <label htmlFor="password">비밀번호</label>
+
             <input
               type="password"
               id="password"
@@ -55,6 +65,7 @@ export default function Register() {
               onChange={handleAuthChange}
             />
           </p>
+
           <p className="submit">
             <input type="submit" className="primary-btn" value="회원가입" />
           </p>
