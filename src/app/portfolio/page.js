@@ -136,7 +136,11 @@ export default async function Portfolio({ searchParams }) {
         )}
 
         {pageCountArray.map(i => (
-          <Link key={i} href={`?page=${i}`} className="secondary-btn">
+          <Link
+            key={i}
+            href={`?page=${i}`}
+            className={`secondary-btn ${safePage === i ? "active" : ""}`}
+          >
             {i}
           </Link>
         ))}
