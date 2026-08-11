@@ -23,8 +23,8 @@ export default async function Portfolio({ searchParams }) {
     return <p>{countError.message}</p>;
   }
 
-  // // 2. 하단 페이지네이션 링크 생성
-  const pageCount = Math.ceil(count / PAGE_SIZE);
+  // 2. 하단 페이지네이션 링크 생성
+  const pageCount = Math.ceil(count / PAGE_SIZE); // 44/6 -> 8
 
   // const pageCountArray = [];
 
@@ -37,18 +37,20 @@ export default async function Portfolio({ searchParams }) {
   // 3. 링크 클릭시
   const safePage = Math.min(page, pageCount);
 
-  const from = (safePage - 1) * PAGE_SIZE; // page1 from 0
+  const from = (safePage - 1) * PAGE_SIZE; //page1  from 0
 
-  const to = from + PAGE_SIZE - 1; // page1 to 5
+  const to = from + PAGE_SIZE - 1; //page1 to 5
 
-  // 4. 페이지네이션 그룹
+  console.log(from, to);
+
+  // 4. 페이지 그룹 계산
   const pageGP = Math.ceil(safePage / PAGEGP_SIZE); // safePage 1 = 1
 
-  const pageGPCount = Math.ceil(pageCount / PAGEGP_SIZE); // 8/5 1.6 => 2
+  const pageGPCount = Math.ceil(pageCount / PAGEGP_SIZE); // 8/5  1.6 => 2
 
-  const groupStart = (pageGp - 1) * PAGEGP_SIZE + 1; // safePage 1 = 1, safePage 6 safePage 2 = 6
+  const groupStart = (pageGP - 1) * PAGEGP_SIZE + 1; // safePage 1 = 1, safePage 6 pageGP 2 = 6
 
-  const groupEnd = Math.min(groupStart + (PAGEGP_SIZE - 1), pageCount); // groupStart 1 = 5
+  const groupEnd = Math.min(groupStart + (PAGEGP_SIZE - 1), pageCount); // groupStart 1  = 5
 
   const pageCountArray = [];
 
@@ -60,7 +62,7 @@ export default async function Portfolio({ searchParams }) {
     .from("portfolio")
     .select()
     .order("id", { ascending: false })
-    .range(0, 5);
+    .range(from, to);
 
   if (error) {
     console.error("연결실패", error);
@@ -123,6 +125,12 @@ export default async function Portfolio({ searchParams }) {
       </div>
 
       <p className="pagenation shadow">
+        {pageGP > 1 && (
+          <Link key={i} href={`?page=${i}`} className="secondary-btn active">
+            {i}
+          </Link>
+        )}
+
         {pageCountArray.map(i => (
           <Link key={i} href={`?page=${i}`} className="secondary-btn active">
             {i}
