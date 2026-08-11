@@ -8,9 +8,9 @@ export default async function Portfolio() {
   // 페이지네이션 설정
   const PAGE_SIZE = 6;
 
-  // 1. protfolio 테이블 데이터 총개수
+  // 1. portfolio 테이블 데이터 총개수
   const { count, error: countError } = await supabase
-    .from("characters")
+    .from("portfolio")
     .select("*", { count: "exact", head: true });
 
   if (countError) {
