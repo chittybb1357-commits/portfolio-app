@@ -12,6 +12,8 @@ export default async function Portfolio({ searchParams }) {
   // 페이지네이션 설정
   const PAGE_SIZE = 6;
 
+  const PAGEGP_SIZE = 5;
+
   // 1. portfolio 테이블 데이터 총개수
   const { count, error: countError } = await supabase
     .from("portfolio")
@@ -21,16 +23,16 @@ export default async function Portfolio({ searchParams }) {
     return <p>{countError.message}</p>;
   }
 
-  // 2. 하단 페이지네이션 링크 생성
+  // // 2. 하단 페이지네이션 링크 생성
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
-  const pageCountArray = [];
+  // const pageCountArray = [];
 
-  for (let i = 1; i <= pageCount; i++) {
-    pageCountArray.push(i);
-  }
+  // for (let i = 1; i <= pageCount; i++) {
+  //   pageCountArray.push(i);
+  // }
 
-  console.log(pageCountArray);
+  // console.log(pageCountArray);
 
   // 3. 링크 클릭시
   const safePage = Math.min(page, pageCount);
@@ -38,6 +40,21 @@ export default async function Portfolio({ searchParams }) {
   const from = (safePage - 1) * PAGE_SIZE; // page1 from 0
 
   const to = from + PAGE_SIZE - 1; // page1 to 5
+
+  // 4. 페이지네이션 그룹
+  const pageGP = Math.ceil(safePage / PAGEGP_SIZE); // safePage 1 = 1
+
+  const pageGPCount = Math.ceil(pageCount / PAGEGP_SIZE); // 8/5 1.6 => 2
+
+  const groupStart = (pageGp - 1) * PAGEGP_SIZE + 1; // safePage 1 = 1, safePage 6 safePage 2 = 6
+
+  const groupEnd = Math.min(groupStart + (PAGEGP_SIZE - 1), pageCount); // groupStart 1 = 5
+
+  const pageCountArray = [];
+
+  for (let i = groupStart; i <= groupEnd; i++) {
+    pageCountArray.push(i);
+  }
 
   const { data, error } = await supabase
     .from("portfolio")
