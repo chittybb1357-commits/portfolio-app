@@ -58,6 +58,10 @@ export default async function Portfolio({ searchParams }) {
     pageCountArray.push(i);
   }
 
+  // const prevGP = groupStart - 1; // 6 - 5 = 1
+  const prevGP = groupStart - PAGEGP_SIZE; // 6 - 5 = 1
+  const nextGP = groupEnd + 1;
+
   const { data, error } = await supabase
     .from("portfolio")
     .select()
@@ -126,16 +130,22 @@ export default async function Portfolio({ searchParams }) {
 
       <p className="pagenation shadow">
         {pageGP > 1 && (
-          <Link key={i} href={`?page=${i}`} className="secondary-btn active">
-            {i}
+          <Link href={`?page=${prevGP}`} className="secondary-btn">
+            이전
           </Link>
         )}
 
         {pageCountArray.map(i => (
-          <Link key={i} href={`?page=${i}`} className="secondary-btn active">
+          <Link key={i} href={`?page=${i}`} className="secondary-btn">
             {i}
           </Link>
         ))}
+
+        {groupEnd < pageCount && (
+          <Link href={`?page=${nextGP}`} className="secondary-btn">
+            다음
+          </Link>
+        )}
       </p>
     </>
   );
