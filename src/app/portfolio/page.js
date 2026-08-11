@@ -33,7 +33,10 @@ export default async function Portfolio({ searchParams }) {
   console.log(pageCountArray);
 
   // 3. 링크 클릭시
-  const from = (page - 1) * PAGE_SIZE; // page1 from 0
+  const safePage = Math.min(page, pageCount);
+
+  const from = (safePage - 1) * PAGE_SIZE; // page1 from 0
+
   const to = from + PAGE_SIZE - 1; // page1 to 5
 
   const { data, error } = await supabase
